@@ -1,56 +1,87 @@
-<!-- <button type="button" class="btn btn-primary">Primary</button> -->
-<form>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="container">
         <div class="row pt-5">
             <div class="col-md-6">
                 <label for="inputName" class="form-label">First name</label>
-                <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                <input type="text" class="form-control" formControlName="name" placeholder="First name"
+                    aria-label="First name">
+                <div *ngIf="submitted && f['name'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['name'].errors && f['name'].errors['required']">Name is required.</div>
+                    <div *ngIf="f['name'].errors && f['name'].errors['minlength']">Name should be 3 character.</div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="inputAddress" class="form-label">Email Address</label>
-                <input type="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                <input type="email" class="form-control" formControlName="email" placeholder="Email Address"
+                    aria-label="Email Address">
+                <div *ngIf="submitted && f['email'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
+                    <div *ngIf="f['email'].errors && f['email'].errors['email']">Enter a valid email address</div>
+                </div>
             </div>
         </div>
 
-        <div class="row pt-5">
+        <div class="row pt-3">
             <div class="col-md-6">
                 <label for="inputPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                <input type="password" class="form-control" formControlName="password" placeholder="Password"
+                    aria-label="Password">
+                <div *ngIf="submitted && f['password'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['password'].errors && f['password'].errors['required']">password is required.</div>
+                    <div *ngIf="f['password'].errors && f['password'].errors['maxlength']">Enter password of max length
+                        8 characters</div>
+                </div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <label for="inputNumber" class="form-label">Phone Number</label>
-                <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number">
-            </div>
+                <input type="text" class="form-control" formControlName="phone" placeholder="Phone Number"
+                    aria-label="Phone Number" (keydown)="validateNumber($event)" maxlength="10">
+                <div *ngIf="submitted && f['phone'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['phone'].errors && f['phone'].errors['required']">Phone number is required.</div>
+                    <div *ngIf="f['phone'].errors && f['phone'].errors['maxlength']">Enter a valid phone number</div>
+                </div>
+            </div> -->
         </div>
 
-        <div class="row pt-5">
+        <div class="row pt-3">
             <div class="col-md-6">
                 <label for="position" class="form-label">Position</label>
-                <select class="form-select">
-                    <option selected>Junior Developer</option>
-                    <option>Senior Developer</option>
+                <select class="form-select" formControlName="position">
+                    <option selected>Select position</option>
+                    <option value="1">Junior Developer</option>
+                    <option value="2">Senior Developer</option>
                 </select>
+                <div *ngIf="submitted && f['position'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['position'].errors && f['position'].errors['required']">Position is required.</div>
+                </div>
             </div>
+
             <div class="col-md-6 pt-2">
-                <label for="position" class="form-label">Gender</label><br>
-                <input class="form-check-input" type="radio" name="Male" id="male" value="option1" checked>&nbsp;
-                <label class="form-check-label" for="male">
-                    Male
-                </label>&nbsp;&nbsp;
-                <input class="form-check-input" type="radio" name="Female" id="female" value="option2">&nbsp;
-                <label class="form-check-label" for="female">
-                    Female
-                </label>
+                <label for="gender" class="form-label">Gender</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="gender"
+                        value="male">
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="gender"
+                        value="female">
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div>
             </div>
         </div>
 
-        <div class="row py-3">
+        <div class="row pt-3">
             <div class="col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="salutation">
                     <label class="form-check-label" for="gridCheck">
                         Please select the check box
                     </label>
+                </div>
+                <div *ngIf="submitted && f['salutation'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['salutation'].errors && f['salutation'].errors['required']">Salutation is required.
+                    </div>
                 </div>
             </div>
         </div>
